@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+`;
+export const CardBox = styled.div`
   position: relative;
   margin-top: 20px;
   margin-bottom: 30px;

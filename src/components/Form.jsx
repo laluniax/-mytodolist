@@ -1,16 +1,28 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as S from "../styles/FormStyle";
-import Card from "./Card";
+import TodoCard from "./TodoCard";
+import uuid from "react-uuid";
+import { addTodo } from "../redux/modules/todosSlice";
 function Form() {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const useSelector = useSelector();
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(content);
   };
+
+  const onClickHandler = (e) => {
+    const newTodo = {
+      id: uuid(),
+      title,
+      content,
+      isDone: false,
+    };
+    dispatch(addTodo(newTodo));
+  };
+
   return (
     <S.Container>
       <S.Form onSubmit={onSubmitHandler}>
@@ -32,7 +44,7 @@ function Form() {
         />
         <S.SubmitButton
           onClick={(e) => {
-            console.log(e.target.value);
+            onClickHandler();
           }}
         >
           +
@@ -41,9 +53,9 @@ function Form() {
 
       <S.CardBox>
         <div>✨ Todo</div>
-        <Card />
+        <TodoCard isActive={false} />
         <div>💫 Complete !</div>
-        <Card />
+        <TodoCard isActive={true} />
       </S.CardBox>
     </S.Container>
   );

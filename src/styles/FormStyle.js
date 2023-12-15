@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 800px;
   width: 1200px;
   margin: 0 auto;
 `;
@@ -52,6 +51,6 @@ export const Label = styled.label`
 export const CardBox = styled.div`
   /* background-color: #faeb61; */
   width: 80%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   height: 90%;
 `;
