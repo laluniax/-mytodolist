@@ -16,14 +16,14 @@ function Card({ isActive }: activeBoolean) {
   const switchMutation = useMutation(switchTodos, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("todos");
-      console.log("성공하였습니다.");
+      console.log("성공하였습니다!");
     },
   });
 
   const deleteMutation = useMutation(deleteTodos, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("todos");
-      console.log("성공하였습니다.");
+      console.log("성공하였습니다!");
     },
   });
 
