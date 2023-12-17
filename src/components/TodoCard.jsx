@@ -1,16 +1,41 @@
 import React from "react";
 import * as S from "../styles/CardStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { switchTodo, deleteTodo } from "../redux/modules/todosSlice";
+import { getTodo } from "../redux/modules/todosSlice";
+import axios from "axios";
 function Card({ isActive }) {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todosSlice);
-  const onCompleteClickHandler = (e) => {
-    dispatch(switchTodo(e));
+
+  const onCompleteClickHandler = async (e, isDone) => {
+    try {
+      // 데이터 수정하기
+      await axios.patch(`http://localhost:4000/todos/${e}`, {
+        isDone: !isDone,
+      });
+      fetchTodos();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteButtonHandler = async (e) => {
+    try {
+      await axios.delete(`http://localhost:4000/todos/${e}`);
+      fetchTodos();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteButtonHandler = (e) => {
-    dispatch(deleteTodo(e));
+  // 데이터 받아오기
+  const fetchTodos = async () => {
+    // 구조분해할당
+    try {
+      const { data } = await axios.get("http://localhost:4000/todos");
+      dispatch(getTodo(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -24,7 +49,7 @@ function Card({ isActive }) {
               <S.CardContent>{item.content}</S.CardContent>
               <S.CompleteButton
                 onClick={() => {
-                  onCompleteClickHandler(item.id);
+                  onCompleteClickHandler(item.id, item.isDone);
                 }}
               >
                 {isActive ? "취소" : "완료"}

@@ -1,26 +1,48 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import * as S from "../styles/FormStyle";
 import TodoCard from "./TodoCard";
 import uuid from "react-uuid";
-import { addTodo } from "../redux/modules/todosSlice";
+import { getTodo } from "../redux/modules/todosSlice";
+import axios from "axios";
+
 function Form() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  // 데이터 받아오기
+  const fetchTodos = async () => {
+    // 구조분해할당
+    try {
+      const { data } = await axios.get("http://localhost:4000/todos");
+      dispatch(getTodo(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // 처음 마운트 되었을 때 데이터 호출
+    fetchTodos();
+  }, []);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
   };
-
-  const onClickHandler = (e) => {
-    const newTodo = {
-      id: uuid(),
-      title,
-      content,
-      isDone: false,
-    };
-    dispatch(addTodo(newTodo));
+  const onClickHandler = async (e) => {
+    try {
+      const newTodos = {
+        id: uuid(),
+        title,
+        content,
+        isDone: false,
+      };
+      await axios.post("http://localhost:4000/todos", newTodos);
+      fetchTodos();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

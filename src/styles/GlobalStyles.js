@@ -30,7 +30,8 @@ html, body, div, span, applet, object, iframe,
     body {
         line-height: 1;
         font-family: "PyeongChangPeace-Bold";
-        color: #fff
+        color: #fff ;
+        
     }
     ol, ul {
         list-style: none;

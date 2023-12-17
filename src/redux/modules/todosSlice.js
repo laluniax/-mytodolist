@@ -9,6 +9,11 @@ export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
+    // 데이터 조회
+    getTodo: (state, action) => {
+      return action.payload;
+    },
+
     addTodo: (state, action) => {
       const newTodo = action.payload;
       state.push(newTodo);
@@ -29,5 +34,5 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { addTodo, switchTodo, deleteTodo } = todosSlice.actions;
+export const { addTodo, switchTodo, deleteTodo, getTodo } = todosSlice.actions;
 export default todosSlice.reducer;
