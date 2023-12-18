@@ -30,7 +30,7 @@ function Form() {
     },
   });
 
-  // useEffect(() => {
+  // useEffect(() => {  
   //   // 처음 마운트 되었을 때 데이터 호출
   // }, []);
 
